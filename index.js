@@ -10,6 +10,7 @@ function generateItemElement(item, itemIndex) {
   return `
       <li class="js-item-index-element" data-item-index="${itemIndex}">
         <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}">${item.name}</span>
+        <input type="text" class="edit" style="display:none"/>
         <div class="shopping-item-controls">
           <button class="shopping-item-toggle js-item-toggle">
               <span class="button-label">check</span>
@@ -17,6 +18,9 @@ function generateItemElement(item, itemIndex) {
           <button class="shopping-item-delete js-item-delete">
               <span class="button-label">delete</span>
           </button>
+          <button class="shopping-item-save js-item-save">
+          <span class="button-label">save</span>
+        </button>
         </div>
       </li>`;
 }
@@ -78,7 +82,6 @@ function handleItemCheckClicked() {
   });
 }
   
-  
 function handleDeleteItemClicked() {
   $('.js-shopping-list').on('click', '.js-item-delete', event => {
     console.log('`handleDeleteItemClicked` ran');
@@ -88,12 +91,66 @@ function handleDeleteItemClicked() {
     renderShoppingList();
   });
 }
+
+function generateFocusInputBox() {
+
+}
+
+function handleSaveButton() {
+  $('.js-shopping-list').on('click', '.js-item-save', event => {
+    //const item = getItemIndexFromElement(event.currentTarget);
+    const value = $('.edit').val();
+   
+    console.log(value);
+    return value;
+  });
+  // $('.edit').focusout(function(){
+  //   $(event.currentTarget).hide().siblings('.display').show().text($(event.currentTarget).val());
+  // });
+}
+
+function handleRenameItemClicked() {
+  //user dblck item and can edit the name
+  //use dblck() and sibligs()
+  console.log('`New FEATURE handleRenameItemClicked` ran');
+  $('.js-shopping-list').on('click', '.js-shopping-item', event => {
+    //console.log($('.js-shopping-item').val());
+    // console.log('`New FEATURE handleRenameItemClicked` ran');
+    const itemIndex = getItemIndexFromElement(event.currentTarget);
+    //console.log(STORE.items[itemIndex]);
+    $(event.currentTarget).hide().siblings('.edit').show().val($(event.currentTarget).text()).focus();
+   // const value = $(event.currentTarget).text();
+   console.log(('.edit').val());
+   STORE.items[itemIndex]['name'] = $('.edit').val();
+   //$(event.currentTarget).text() = handleSaveButton();
+   // console.log($('.edit').val()); 
+      // addItemToShoppingList(newItemName);
+      // renderShoppingList();
+   // });
+  }); 
+}
+
+
+// $('#js-shopping-list-form').submit(function(event) {
+//   event.preventDefault();
+//   console.log('`handleNewItemSubmit` ran');
+//   const newItemName = $('.js-shopping-list-entry').val();
+//   $('.js-shopping-list-entry').val('');
+//   addItemToShoppingList(newItemName);
+//   renderShoppingList();
+// });
+
+function handleShowOnlyCheckedItems() {
+
+}
   
 function handleShoppingList() {
   renderShoppingList();
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
+  handleRenameItemClicked();
+  handleSaveButton();
 }
   
 $(handleShoppingList);
