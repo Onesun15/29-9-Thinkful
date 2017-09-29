@@ -7,7 +7,7 @@ const STORE = [
   {name: 'bread', checked: false}
 ];
   
-function generateItemElement(item, itemIndex, template) {
+function generateItemElement(item, itemIndex) {
   return `
       <li class="js-item-index-element" data-item-index="${itemIndex}">
         <span class="shopping-item js-shopping-item ${item.checked ? 'shopping-item__checked' : ''}">${item.name}</span>
@@ -80,9 +80,13 @@ function handleItemCheckClicked() {
   
   
 function handleDeleteItemClicked() {
-  // Listen for when users want to delete an item and 
-  // delete it
-  console.log('`handleDeleteItemClicked` ran');
+  $('.js-shopping-list').on('click', '.js-item-delete', event => {
+    console.log('`handleDeleteItemClicked` ran');
+    const itemIndex = getItemIndexFromElement(event.currentTarget);
+    STORE.splice(itemIndex, 1);
+
+    renderShoppingList();
+  })
 }
   
 function handleShoppingList() {
