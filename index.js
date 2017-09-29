@@ -86,7 +86,7 @@ function handleDeleteItemClicked() {
     STORE.splice(itemIndex, 1);
 
     renderShoppingList();
-  })
+  });
 }
   
 function handleShoppingList() {
