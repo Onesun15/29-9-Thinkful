@@ -1,4 +1,5 @@
 'use strict';
+/* global $ */
 
 const STORE = {
   items: [ {name: 'beef', checked: false} ],
@@ -25,12 +26,9 @@ function generateItemElement(item, itemIndex) {
       </li>`;
 }
   
-  
 function generateShoppingItemsString(shoppingList) {
   console.log('Generating shopping list element');
-  
   const items = shoppingList.map((item, index) => generateItemElement(item, index));
-    
   return items.join('');
 }
   
@@ -62,7 +60,6 @@ function handleNewItemSubmit() {
   
 function toggleCheckedForListItem(itemIndex) {
   console.log('Toggling checked property for item at index ' + itemIndex);
-  console.log(STORE.items[itemIndex]['checked']);
   STORE.items[itemIndex]['checked'] = !STORE.items[itemIndex]['checked'];
 }
   
@@ -87,61 +84,43 @@ function handleDeleteItemClicked() {
     console.log('`handleDeleteItemClicked` ran');
     const itemIndex = getItemIndexFromElement(event.currentTarget);
     STORE.items.splice(itemIndex, 1);
-
     renderShoppingList();
   });
 }
 
-function generateFocusInputBox() {
-
+function handleRenameItemClicked() {
+  console.log('`New FEATURE handleRenameItemClicked` ran');
+  $('.js-shopping-list').on('click', '.js-shopping-item', event => {
+    $(event.currentTarget).hide().siblings('.edit').show().val($(event.currentTarget).text()).focus();
+  }); 
 }
 
 function handleSaveButton() {
   $('.js-shopping-list').on('click', '.js-item-save', event => {
-    //const item = getItemIndexFromElement(event.currentTarget);
-    const value = $('.edit').val();
-   
-    console.log(value);
-    return value;
-  });
-  // $('.edit').focusout(function(){
-  //   $(event.currentTarget).hide().siblings('.display').show().text($(event.currentTarget).val());
-  // });
-}
-
-function handleRenameItemClicked() {
-  //user dblck item and can edit the name
-  //use dblck() and sibligs()
-  console.log('`New FEATURE handleRenameItemClicked` ran');
-  $('.js-shopping-list').on('click', '.js-shopping-item', event => {
-    //console.log($('.js-shopping-item').val());
-    // console.log('`New FEATURE handleRenameItemClicked` ran');
     const itemIndex = getItemIndexFromElement(event.currentTarget);
-    //console.log(STORE.items[itemIndex]);
-    $(event.currentTarget).hide().siblings('.edit').show().val($(event.currentTarget).text()).focus();
-   // const value = $(event.currentTarget).text();
-   console.log(('.edit').val());
-   STORE.items[itemIndex]['name'] = $('.edit').val();
-   //$(event.currentTarget).text() = handleSaveButton();
-   // console.log($('.edit').val()); 
-      // addItemToShoppingList(newItemName);
-      // renderShoppingList();
-   // });
-  }); 
+    STORE.items[itemIndex]['name'] = $('.edit').val();
+    renderShoppingList();
+  });
 }
 
+function hideAllItems() {
+  //take in true false to hide all items
+}
 
-// $('#js-shopping-list-form').submit(function(event) {
-//   event.preventDefault();
-//   console.log('`handleNewItemSubmit` ran');
-//   const newItemName = $('.js-shopping-list-entry').val();
-//   $('.js-shopping-list-entry').val('');
-//   addItemToShoppingList(newItemName);
-//   renderShoppingList();
-// });
+function showAllItems() {
+  //take in true false to hide all items
+}
 
 function handleShowOnlyCheckedItems() {
-
+//create button that will show all items or only unchecked using 
+//use object STORE values to toggle true false - hideCompleted: false toggle-all
+  $('#js-shopping-list-form').on('click', '.js-toggle-all', event => {
+    console.log('New FEATURE II `handleShowOnlyCheckedItems` ran');
+    //const itemIndex = getItemIndexFromElement(event.currentTarget);
+    //STORE
+    // STORE.items.splice(itemIndex, 1);
+    // renderShoppingList();
+  });
 }
   
 function handleShoppingList() {
@@ -151,6 +130,7 @@ function handleShoppingList() {
   handleDeleteItemClicked();
   handleRenameItemClicked();
   handleSaveButton();
+  handleShowOnlyCheckedItems();
 }
   
 $(handleShoppingList);
