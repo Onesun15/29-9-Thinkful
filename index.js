@@ -1,11 +1,11 @@
 'use strict';
 
-const STORE = [
-  {name: 'apples', checked: false},
-  {name: 'oranges', checked: false},
-  {name: 'milk', checked: true},
-  {name: 'bread', checked: false}
-];
+const STORE = {
+  items: [ {name: 'apples', checked: false} ],
+  hideCompleted: false,
+  searchTerm: null,
+  // more props...
+};
   
 function generateItemElement(item, itemIndex) {
   return `
