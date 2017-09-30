@@ -28,10 +28,12 @@ function generateItemElement(item, itemIndex) {
   
 function generateShoppingItemsString(shoppingList) {
   console.log('Generating shopping list element');
-  
+
   const items = shoppingList.map((item, index) => generateItemElement(item, index));
     
-  return items.join('');
+  items.join('');
+
+  return items;
 }
   
   
@@ -42,6 +44,13 @@ function renderShoppingList() {
   
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
+
+  if (STORE.hideCompleted) {
+    $('.shopping-item__checked').parent().hide();
+  }
+  else if (!STORE.hideCompleted) {
+    $('.shopping-item__checked').parent().show();
+  }
 }
   
 function addItemToShoppingList(itemName) {
@@ -140,8 +149,15 @@ function handleRenameItemClicked() {
 //   renderShoppingList();
 // });
 
-function handleShowOnlyCheckedItems() {
+function handleHideCompleted() {
+  //check new button; if toggled, use .hide() method
+  console.log('Hide function ran.');
 
+  $('.js-item-hide').on('click',function() {
+    STORE.hideCompleted = !STORE.hideCompleted;
+    
+    renderShoppingList();
+  });
 }
   
 function handleShoppingList() {
@@ -151,6 +167,7 @@ function handleShoppingList() {
   handleDeleteItemClicked();
   handleRenameItemClicked();
   handleSaveButton();
+  handleHideCompleted();
 }
   
 $(handleShoppingList);
