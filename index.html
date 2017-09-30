@@ -17,9 +17,17 @@
             <button type="submit">Add item</button>
            
         </form>
+        <form id="js-search-form">
+                <input type="text" name="query"  placeholder=" e.g., 'br'" aria-label="Search for an item" id="search-term" class="js-search-term">
+                <button type="submit">Search</button>
+                <br>
+                <input type="checkbox" name="toggle-checked" id="toggle-checked" class="js-toggle-checked">
+                <label for="toggle-checked">Hide checked items</label>
+              </form>
         <ul class="shopping-list js-shopping-list">
         </ul>
-        <button class="js-toggle-all">View All/Unchecked</button>
+        <div class="div-toggle">
+        </div>
     </div>
 </body>
   <script src="//code.jquery.com/jquery.min.js"></script>
