@@ -16,6 +16,10 @@
             <input type="text" name="shopping-list-entry" class="js-shopping-list-entry" placeholder="e.g., broccoli">
             <button type="submit">Add item</button>
         </form>
+        <form id="js-shopping-list-search">
+            <label for="js-search-list">Search for an item..</label>
+            <input type="text" name="js-search-list" class="js-search-list" onkeyup="searchList()" placeholder="e.g., cheese">
+        </form>
         <button class="shopping-item-hide js-item-hide">
             <span class="button-label">Hide checked</span>
         </button>

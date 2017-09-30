@@ -44,14 +44,8 @@ function renderShoppingList() {
   
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
-
-  if (STORE.hideCompleted) {
-    $('.shopping-item__checked').parent().hide();
-  }
-  else if (!STORE.hideCompleted) {
-    $('.shopping-item__checked').parent().show();
-  }
 }
+
   
 function addItemToShoppingList(itemName) {
   console.log(`Adding "${itemName}" to shopping list`);
@@ -101,9 +95,6 @@ function handleDeleteItemClicked() {
   });
 }
 
-function generateFocusInputBox() {
-
-}
 
 function handleSaveButton() {
   $('.js-shopping-list').on('click', '.js-item-save', event => {
@@ -128,14 +119,14 @@ function handleRenameItemClicked() {
     const itemIndex = getItemIndexFromElement(event.currentTarget);
     //console.log(STORE.items[itemIndex]);
     $(event.currentTarget).hide().siblings('.edit').show().val($(event.currentTarget).text()).focus();
-   // const value = $(event.currentTarget).text();
-   console.log(('.edit').val());
-   STORE.items[itemIndex]['name'] = $('.edit').val();
-   //$(event.currentTarget).text() = handleSaveButton();
-   // console.log($('.edit').val()); 
-      // addItemToShoppingList(newItemName);
-      // renderShoppingList();
-   // });
+    // const value = $(event.currentTarget).text();
+    console.log(('.edit').val());
+    STORE.items[itemIndex]['name'] = $('.edit').val();
+    //$(event.currentTarget).text() = handleSaveButton();
+    // console.log($('.edit').val()); 
+    // addItemToShoppingList(newItemName);
+    // renderShoppingList();
+    // });
   }); 
 }
 
@@ -156,7 +147,26 @@ function handleHideCompleted() {
   $('.js-item-hide').on('click',function() {
     STORE.hideCompleted = !STORE.hideCompleted;
     
-    renderShoppingList();
+    if (STORE.hideCompleted) {
+      $('.shopping-item__checked').parent().hide();
+    }
+    else if (!STORE.hideCompleted) {
+      $('.shopping-item__checked').parent().show();
+    }
+  });
+}
+
+function searchList() {
+
+  $('.js-search-list').on('keyup', function() {
+    let searchString = $('.js-search-list').val();
+
+    // for (let i = 0; i < STORE.items.length; i++) {
+    //   if (STORE.items[i]['name'] !== searchString) {
+    //     console.log('Doesn\'t match.');
+    //     // $(`span:contains(${STORE.items[i]['name']})`).parent().hide();
+    //   }
+    // }
   });
 }
   
@@ -168,6 +178,7 @@ function handleShoppingList() {
   handleRenameItemClicked();
   handleSaveButton();
   handleHideCompleted();
+  searchList();
 }
   
 $(handleShoppingList);
