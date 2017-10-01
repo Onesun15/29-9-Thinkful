@@ -2,7 +2,10 @@
 /* global $ */
 
 const STORE = {
-  items: [ {name: 'apples', checked: false, editable: false, hidden: false}, {name: 'milk', checked: false, editable: false, hidden: false}, {name: 'cheese', checked: false, editable: false, hidden: false} ],
+  items: [ {name: 'apples', checked: false},
+    {name: 'oranges', checked: false},
+    {name: 'milk', checked: true},
+    {name: 'bread', checked: false} ],
   hideChecked: false,
   searchTerm: null
 };
@@ -83,9 +86,9 @@ function handleSearchForItem() {
 }
 
 function handleEditItemClicked() {
-  $('.js-shopping-item').on('click', function(event) {
+  $('ul').on('click', '.js-shopping-item', function(event) {
     $(event.currentTarget).hide().siblings('.edit').show().val($(event.currentTarget).text()).focus();
-    
+
     $('.edit').focusout(function(event){
       const itemIndex = getItemIndexFromElement(event.currentTarget);
       $(event.currentTarget).hide().siblings('.js-shopping-item').show().text($(event.currentTarget).val());
@@ -377,6 +380,11 @@ $(handleShoppingList);
 
 
 /* --Code Depot--
+
+
+
+items: [ {name: 'apples', checked: false, editable: false, hidden: false}, {name: 'milk', checked: false, editable: false, hidden: false}, {name: 'cheese', checked: false, editable: false, hidden: false} ],
+
 
 // handleEditItemClicked();
   //handleSaveButton();
