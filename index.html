@@ -18,13 +18,14 @@
            
         </form>
         <form id="js-search-form">
-                <input type="text" name="query"  placeholder=" e.g., 'br'" aria-label="Search for an item" id="search-term" class="js-search-term">
-                <button type="submit">Search</button>
-                <br>
+                <!-- <input type="text" name="query"  placeholder=" e.g., 'br'" aria-label="Search for an item" id="search-term" class="js-search-term"> -->
+                <!-- <button type="submit">Search</button>
+                <br> -->
                 <input type="checkbox" name="toggle-checked" id="toggle-checked" class="js-toggle-checked">
                 <label for="toggle-checked">Hide checked items</label>
               </form>
-        <ul class="shopping-list js-shopping-list">
+              <input type="text" id="searchforitem" onkeyup="handleSearchForItem()" placeholder="Search for item..." title="Type in an item">  
+        <ul class="shopping-list js-shopping-list" id="js-ul">
         </ul>
         <div class="div-toggle">
         </div>
