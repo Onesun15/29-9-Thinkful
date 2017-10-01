@@ -2,10 +2,10 @@
 /* global $ */
 
 const STORE = {
-  items: [ {name: 'apples', checked: false},
-    {name: 'oranges', checked: false},
-    {name: 'milk', checked: true},
-    {name: 'bread', checked: false} ],
+  items: [ {name: 'apples', checked: false, hidden: false},
+    {name: 'oranges', checked: false, hidden: false},
+    {name: 'milk', checked: true, hidden: false},
+    {name: 'bread', checked: false, hidden: false} ],
   hideChecked: false,
   searchTerm: null
 };
@@ -14,6 +14,15 @@ function isHidden(item){
   if (STORE.hideChecked && item.checked) {
     return true;
   }
+  
+  if (STORE.searchTerm !==null && item.name !== STORE.searchTerm) {
+    item.hidden = !item.hidden;
+    return true;
+  } else if (STORE.searchTerm === null) {
+    item.hidden = false;
+    return false;
+  }
+ 
 }
   
 function generateItemElement(item, itemIndex) {
@@ -67,24 +76,25 @@ function handleNewItemSubmit() {
   });
 }
 
-//borrowed this from the web to implement search, it works!
-function handleSearchForItem() {
-  //console.log('`handleSearchForItem` ran');
-  let input, filter, ul, li, a, i;
-  input = document.getElementById('searchforitem');
-  filter = input.value.toUpperCase();
-  ul = document.getElementById('js-ul');
-  li = ul.getElementsByTagName('li');
-  for (i = 0; i < li.length; i++) {
-    a = li[i].getElementsByTagName('span')[0];
-    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-      li[i].style.display = '';
-    } else {
-      li[i].style.display = 'none';
-    }
+function handleBlankSearchSubmit() {
+  if ($('.js-search-term').val() === '') {
+    STORE.searchTerm = null;
   }
 }
 
+function handleSearchSubmit() {
+  //console.log('`handleSearchSubmit` ran');
+  $('#js-search-form').submit(function(event) {
+    event.preventDefault();
+    const newItemName = $('.js-search-term').val();
+    //$('.js-search-term').val('');
+    STORE.searchTerm = newItemName;
+    handleBlankSearchSubmit();
+    renderShoppingList();
+  });
+}
+
+// borrowed this idea from the web with some changes, it works!
 function handleEditItemClicked() {
   $('ul').on('click', '.js-shopping-item', function(event) {
     $(event.currentTarget).hide().siblings('.edit').show().val($(event.currentTarget).text()).focus();
@@ -92,12 +102,12 @@ function handleEditItemClicked() {
     $('.edit').focusout(function(event){
       const itemIndex = getItemIndexFromElement(event.currentTarget);
       $(event.currentTarget).hide().siblings('.js-shopping-item').show().text($(event.currentTarget).val());
-      STORE.items[itemIndex]['name'] = $(event.currentTarget).val();
+      const upDatedItemName = $(event.currentTarget).val();
+      STORE.items[itemIndex]['name'] = upDatedItemName;
       renderShoppingList();
     });
   });
 }
-
 
 function toggleCheckedForListItem(itemIndex) {
   //console.log('Toggling checked property for item at index ' + itemIndex);
@@ -146,11 +156,9 @@ function handleShoppingList() {
   handleItemCheckClicked();
   handleDeleteItemClicked();
   handleToggleChecked();
-  handleSearchForItem();
+  handleSearchSubmit();
   handleEditItemClicked();
-  // handleEditItemClicked();
-  // updateStoreEditedName();
-  
+  handleBlankSearchSubmit();
 }
 
 $(handleShoppingList);
@@ -161,10 +169,25 @@ $(handleShoppingList);
 //---------------------------------------------------------------------------Test Ideas-----------------------------------------------------------------
 
 
-//https://codepen.io/dengeist/pen/zEdYaJ/?editors=1010
-//https://codepen.io/dengeist/pen/zEdYaJ/
 
-
+//-------------Code Search Auto Code
+// borrowed this from the web to implement search, doesn't check STORE state (yet) but it works!
+// function handleSearchForItem() {
+//   //console.log('`handleSearchForItem` ran');
+//   let input, filter, ul, li, a, i;
+//   input = document.getElementById('searchforitem');
+//   filter = input.value.toUpperCase();
+//   ul = document.getElementById('js-ul');
+//   li = ul.getElementsByTagName('li');
+//   for (i = 0; i < li.length; i++) {
+//     a = li[i].getElementsByTagName('span')[0];
+//     if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+//       li[i].style.display = '';
+//     } else {
+//       li[i].style.display = 'none';
+//     }
+//   }
+// }
 
 // function updateStoreEditedName() {
 //   // console.log('updateStoreEditedName, ran ');
