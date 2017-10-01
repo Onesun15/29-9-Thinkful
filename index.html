@@ -12,19 +12,20 @@
     <div class="container">
         <h1>Shopping List</h1>
         <form id="js-shopping-list-form">
-            <label for="shopping-list-entry">Add an item</label>
-            <input type="text" name="shopping-list-entry" class="js-shopping-list-entry" placeholder="e.g., broccoli">
+            <!-- <label for="shopping-list-entry">Add an item</label> -->
+            <input type="text" name="shopping-list-entry" class="js-shopping-list-entry" placeholder="Add an item....">
             <button type="submit">Add item</button>
-           
         </form>
+        <br>
         <form id="js-search-form">
                 <!-- <input type="text" name="query"  placeholder=" e.g., 'br'" aria-label="Search for an item" id="search-term" class="js-search-term"> -->
                 <!-- <button type="submit">Search</button>
                 <br> -->
                 <input type="checkbox" name="toggle-checked" id="toggle-checked" class="js-toggle-checked">
                 <label for="toggle-checked">Hide checked items</label>
-              </form>
-              <input type="text" id="searchforitem" onkeyup="handleSearchForItem()" placeholder="Search for item..." title="Type in an item">  
+        </form>
+        <br>
+        <input type="text" id="searchforitem" onkeyup="handleSearchForItem()" placeholder="Search for item..." title="Type in an item">  
         <ul class="shopping-list js-shopping-list" id="js-ul">
         </ul>
         <div class="div-toggle">
