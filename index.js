@@ -20,6 +20,7 @@ function generateItemElement(item, itemIndex) {
   return (
     `<li class="js-item-index-element" data-item-index="${itemIndex}" ${hiddenAttr} >
       <span id="js-li" class="shopping-item js-shopping-item ${checkedClass} ">${item.name}</span>
+      <input type="text" class="edit" style="display:none"/>
       <div class="shopping-item-controls">
         <button class="shopping-item-toggle js-item-toggle">
           <span class="button-label">check</span>
@@ -81,6 +82,20 @@ function handleSearchForItem() {
   }
 }
 
+function handleEditItemClicked() {
+  $('.js-shopping-item').on('click', function(event) {
+    $(event.currentTarget).hide().siblings('.edit').show().val($(event.currentTarget).text()).focus();
+    
+    $('.edit').focusout(function(event){
+      const itemIndex = getItemIndexFromElement(event.currentTarget);
+      $(event.currentTarget).hide().siblings('.js-shopping-item').show().text($(event.currentTarget).val());
+      STORE.items[itemIndex]['name'] = $(event.currentTarget).val();
+      renderShoppingList();
+    });
+  });
+}
+
+
 function toggleCheckedForListItem(itemIndex) {
   //console.log('Toggling checked property for item at index ' + itemIndex);
   STORE.items[itemIndex]['checked'] = !STORE.items[itemIndex]['checked'];
@@ -129,6 +144,10 @@ function handleShoppingList() {
   handleDeleteItemClicked();
   handleToggleChecked();
   handleSearchForItem();
+  handleEditItemClicked();
+  // handleEditItemClicked();
+  // updateStoreEditedName();
+  
 }
 
 $(handleShoppingList);
@@ -144,6 +163,38 @@ $(handleShoppingList);
 
 
 
+// function updateStoreEditedName() {
+//   // console.log('updateStoreEditedName, ran ');
+//   // console.log( $('.js-shopping-item').text());
+//   // $('.js-shopping-item').on('change', event => {
+//   //   const itemIndex = getItemIndexFromElement(event.currentTarget);
+//   //   //$(event.currentTarget).attr('contenteditable', true);
+//   //   alert('The text has been changed.');
+//   //   console.log('update name', STORE.items[itemIndex]['name'], $('.js-shopping-item').text());
+//   //   //STORE.items[itemIndex].name = $('.js-shopping-item').text();
+//   //   renderShoppingList();
+//   // }); 
+// }
+
+// //----------------------------------------------------------------------------------------
+// //mouseup
+// function handleEditItemClicked() {
+//   $('.js-shopping-item').on('focus', event => {
+//     console.log('Test Output', $('.js-shopping-item').text(), $('.js-shopping-item').val());
+//     const itemIndex = getItemIndexFromElement(event.currentTarget);
+//     $(event.currentTarget).css("background-color", "yellow");
+//     console.log('Test Index Value', itemIndex);
+//     $(event.currentTarget).attr('contenteditable', true);
+//    // STORE.items[itemIndex]['name'] = 'pear';
+//     // alert('The text has been changed.');
+//     //renderShoppingList();
+//   }).mouseleave(event => {
+//     alert('The text has been changed.');
+//     const itemIndex = getItemIndexFromElement(event.currentTarget);
+//     STORE.items[itemIndex]['name'] = 'pear';
+//     renderShoppingList();
+//   });
+// }
 // isSearchTerm(item);
 // const hiddenClass = item.hidden ? 'hidden' : ''; =>${hiddenClass}
 
