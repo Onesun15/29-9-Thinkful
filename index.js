@@ -22,7 +22,6 @@ function isHidden(item){
     item.hidden = false;
     return false;
   }
- 
 }
   
 function generateItemElement(item, itemIndex) {
@@ -62,12 +61,12 @@ function renderShoppingList() {
   
 function addItemToShoppingList(itemName) {
   //console.log(`Adding "${itemName}" to shopping list`);
-  STORE.items.push({name: itemName, checked: false, editable: false, hidden: false});
+  STORE.items.push({name: itemName, checked: false, hidden: false});
 }
   
 function handleNewItemSubmit() {
   //console.log('`handleNewItemSubmit` ran');
-  $('#js-shopping-list-form').submit(function(event) {
+  $('#js-shopping-list-form').submit(event => {
     event.preventDefault();
     const newItemName = $('.js-shopping-list-entry').val();
     $('.js-shopping-list-entry').val('');
@@ -76,7 +75,7 @@ function handleNewItemSubmit() {
   });
 }
 
-function handleBlankSearchSubmit() {
+function resetSearchSubmit() {
   if ($('.js-search-term').val() === '') {
     STORE.searchTerm = null;
   }
@@ -84,22 +83,22 @@ function handleBlankSearchSubmit() {
 
 function handleSearchSubmit() {
   //console.log('`handleSearchSubmit` ran');
-  $('#js-search-form').submit(function(event) {
+  $('#js-search-form').submit(event => {
     event.preventDefault();
     const newItemName = $('.js-search-term').val();
     //$('.js-search-term').val('');
     STORE.searchTerm = newItemName;
-    handleBlankSearchSubmit();
+    resetSearchSubmit();
     renderShoppingList();
   });
 }
 
 // borrowed this idea from the web with some changes, it works!
 function handleEditItemClicked() {
-  $('ul').on('click', '.js-shopping-item', function(event) {
+  $('ul').on('click', '.js-shopping-item', event => {
     $(event.currentTarget).hide().siblings('.edit').show().val($(event.currentTarget).text()).focus();
 
-    $('.edit').focusout(function(event){
+    $('.edit').focusout(event => {
       const itemIndex = getItemIndexFromElement(event.currentTarget);
       $(event.currentTarget).hide().siblings('.js-shopping-item').show().text($(event.currentTarget).val());
       const upDatedItemName = $(event.currentTarget).val();
@@ -119,7 +118,7 @@ function toggleCheckedVisibility() {
 }
 
 function handleToggleChecked() {
-  $('#js-search-form').on('change', '.js-toggle-checked', event => {
+  $('#js-search-form').on('change', '.js-toggle-checked', () => {
     toggleCheckedVisibility();
     renderShoppingList();
   });
@@ -158,7 +157,6 @@ function handleShoppingList() {
   handleToggleChecked();
   handleSearchSubmit();
   handleEditItemClicked();
-  handleBlankSearchSubmit();
 }
 
 $(handleShoppingList);
